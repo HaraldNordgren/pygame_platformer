@@ -1,0 +1,49 @@
+#!/bin/bash
+
+BASE="/home/harald/pygame/2d-platformer"
+
+if [ $PWD != $BASE ]; then
+    echo Run from $BASE
+    exit 1
+elif [ -z "$2" ]; then
+    echo "Usage: $0 image-segements-folder destination-file"
+    exit 1
+fi
+
+
+if [ ${1: -1} != "/" ]; then
+    segments_folder="$1/"
+else
+    segments_folder=$1
+fi
+
+images="1 2 3 4 5 6"
+extension=".png"
+
+originals_folder="originals/"
+trimmed_folder="trimmed/"
+chopped_folder="chopped/"
+result_folder="result/"
+
+chop_values="0x0 70x0 0x0 0x0 0x0 0x0"
+
+
+cd $segments_folder
+
+for i in $images; do
+    padded_number=$(printf "%03d" $i)
+    filename=${padded_number}${extension}
+    original_file="${originals_folder}${filename}"
+
+    trimmed_file="${trimmed_folder}${filename}"
+    convert "${original_file}" -trim $trimmed_file
+
+    chop_value=$(echo $chop_values | cut -d " " -f $i)
+    chopped_file=${chopped_folder}${filename}
+    convert $trimmed_file -chop $chop_value $chopped_file
+
+    chopped_files="${chopped_files}${chopped_file} "
+done
+
+cd $PWD
+convert ${chopped_files} +append "${result_folder}$2"

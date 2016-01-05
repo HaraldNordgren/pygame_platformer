@@ -1,0 +1,9 @@
+BACKGROUNDS:
+http://programarcadegames.com/python_examples/en/sprite_sheets/
+
+ALL SPRITES:
+http://www.spriters-resource.com/genesis_32x_scd/sonicth1/
+
+MAYBE USEFUL:
+http://junkerhq.net/xrgb/index.php/240p_test_suite
+
