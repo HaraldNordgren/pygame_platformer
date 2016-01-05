@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -f src/directory_info.py ]; then
+    ./scripts/install $PWD
+    echo "Game installed."
+fi
+
+python3 ./src/platform_scroller.py

@@ -12,12 +12,13 @@ from spritesheet_functions import SpriteSheet
 #   Width of sprite
 #   Height of sprite
 
-GRASS_LEFT            = (576, 720, 70, 70)
-GRASS_RIGHT           = (576, 576, 70, 70)
-GRASS_MIDDLE          = (504, 576, 70, 70)
-STONE_PLATFORM_LEFT   = (432, 720, 70, 40)
-STONE_PLATFORM_MIDDLE = (648, 648, 70, 40)
-STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
+FLOOR_1                = (69, 274, 261, 313, 300, 100)
+#GRASS_RIGHT           = (576, 576, 70, 70)
+#GRASS_MIDDLE          = (504, 576, 70, 70)
+#STONE_PLATFORM_LEFT   = (432, 720, 70, 40)
+#STONE_PLATFORM_MIDDLE = (648, 648, 70, 40)
+#STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
+
 
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -28,12 +29,25 @@ class Platform(pygame.sprite.Sprite):
             code. """
         super().__init__()
 
-        sprite_sheet = SpriteSheet("tiles_spritesheet.png")
-        # Grab the image for this platform
-        self.image = sprite_sheet.get_image(sprite_sheet_data[0],
-                                            sprite_sheet_data[1],
-                                            sprite_sheet_data[2],
-                                            sprite_sheet_data[3])
+        #sprite_sheet = SpriteSheet("tiles_spritesheet.png")
+        sprite_sheet = SpriteSheet( \
+                "images/green-hill-zone/level-fragments/27190.png")
+
+        self.x0 = sprite_sheet_data[0];
+        self.y0 = sprite_sheet_data[1];
+        self.x1 = sprite_sheet_data[2];
+        self.y1 = sprite_sheet_data[3];
+
+        self.image = sprite_sheet.get_image(self.x0, \
+                self.y0, self.x1-self.x0, self.y1-self.y0)
+
+        if (len(sprite_sheet_data) > 4):
+            a = sprite_sheet_data[4]
+            b = sprite_sheet_data[5]
+            self.image = pygame.transform.scale(self.image, (a,b))
+        
+        colorkey = self.image.get_at((0,0))
+        self.image.set_colorkey(colorkey)
 
         self.rect = self.image.get_rect()
 

@@ -9,18 +9,30 @@ import constants
 from platforms import MovingPlatform
 from spritesheet_functions import SpriteSheet
 
+import directory_info
+
 class Player(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
     controls. """
 
 
-    # -- Methods
+    def extract_sprite(self, sprite_sheet, x0, y0, width, height):
+        image = sprite_sheet.get_image(x0, y0, width, height, True)
+
+        scale_factor = 4
+        image = pygame.transform.scale(image, \
+                [i*scale_factor for i in (width, height)] )
+
+        self.walking_frames_r.append(image)
+        image = pygame.transform.flip(image, True, False)
+        self.walking_frames_l.append(image)
+
     def __init__(self):
         """ Constructor function """
 
         # Call the parent's constructor
         super().__init__()
-
+        
         # -- Attributes
         # Set speed vector of player
         self.change_x = 0
@@ -37,46 +49,16 @@ class Player(pygame.sprite.Sprite):
         # List of sprites we can bump against
         self.level = None
 
-        sprite_sheet = SpriteSheet("p1_walk.png")
-        # Load all the right facing images into a list
-        image = sprite_sheet.get_image(0, 0, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(66, 0, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(132, 0, 67, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(0, 93, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(66, 93, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(132, 93, 72, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(0, 186, 70, 90)
-        self.walking_frames_r.append(image)
-
-        # Load all the right facing images, then flip them
-        # to face left.
-        image = sprite_sheet.get_image(0, 0, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(66, 0, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(132, 0, 67, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(0, 93, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(66, 93, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(132, 93, 72, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(0, 186, 70, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
+        sprite_sheet = SpriteSheet(directory_info.base_directory + \
+                "/images/characters/sonic/Sonic-Gen1.gif")
+        
+        self.extract_sprite(sprite_sheet, 2, 58, 37, 37)
+        self.extract_sprite(sprite_sheet, 40, 57, 32, 38)
+        self.extract_sprite(sprite_sheet, 73, 58, 24, 37)
+        self.extract_sprite(sprite_sheet, 99, 58, 36, 37)
+        self.extract_sprite(sprite_sheet, 137, 57, 29, 38)
+        self.extract_sprite(sprite_sheet, 168, 58, 26, 37)
+        
 
         # Set the image the player starts with
         self.image = self.walking_frames_r[0]

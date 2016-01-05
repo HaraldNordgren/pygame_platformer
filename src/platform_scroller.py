@@ -25,10 +25,9 @@ http://opengameart.org/content/platformer-art-deluxe
 """
 
 import pygame
-
 import constants
-import levels
 
+import levels
 from player import Player
 
 def main():
@@ -39,15 +38,16 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Platformer with sprite sheets")
+    pygame.display.set_caption("Sanic the Hedgehog 2015")
 
     # Create the player
     player = Player()
 
     # Create all the levels
     level_list = []
-    level_list.append(levels.Level_01(player))
-    level_list.append(levels.Level_02(player))
+    level_list.append(levels.Green_hill_zone(player))
+    #level_list.append(levels.Level_01(player))
+    #level_list.append(levels.Level_02(player))
 
     # Set the current level
     current_level_no = 0
@@ -56,8 +56,9 @@ def main():
     active_sprite_list = pygame.sprite.Group()
     player.level = current_level
 
-    player.rect.x = 340
-    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
+    player.rect.x = 280
+    #player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
+    player.rect.y = 200
     active_sprite_list.add(player)
 
     #Loop until the user clicks the close button.
@@ -65,7 +66,7 @@ def main():
 
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
-
+    
     # -------- Main Program Loop -----------
     while not done:
         for event in pygame.event.get(): # User did something

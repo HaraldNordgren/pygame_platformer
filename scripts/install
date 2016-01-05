@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo base_directory = '"'$1'"' > src/directory_info.py
+echo base_directory=$1 > scripts/directory_info
